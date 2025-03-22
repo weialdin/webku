@@ -14,7 +14,7 @@ class FrontController extends Controller
 {
     public function index() {
 
-        $categories = Category::whereIn('id', [1,3,4,5,6])->get();
+        $categories = Category::whereIn('id', [1,2,3,4,5,6])->get();
 
         $menus = Category::whereIn('id', [7,8,9,10,])->get();
 
@@ -41,7 +41,7 @@ class FrontController extends Controller
         $entertainment_articles = ArticleNews::whereHas('category', function($query) {
             $query->where('name', 'Ngoding');
         })
-        ->where('is_featured', 'not_featured')
+        ->where('is_featured', 'no')
         ->latest()
         ->take(6)
         ->get();
@@ -126,9 +126,9 @@ class FrontController extends Controller
         $author_news = ArticleNews::where('author_id', $articleNews->author_id)
         ->where('id', '!=', $articleNews->id)
         ->inRandomOrder()
-        ->get(3);
+        ->get();
 
-        return view('front.details', compact('author_news', 'squareads1', 'squareads2', 'articleNews', 'categories', 'articles', 'bannerads'));
+        return view('front.details', compact('square_ads','author_news', 'square_ads_1', 'square_ads_2', 'articleNews', 'categories', 'articles', 'bannerads'));
     }
 
     public function about() {
